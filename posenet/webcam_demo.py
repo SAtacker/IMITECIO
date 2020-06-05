@@ -13,7 +13,7 @@ import tensorflow as tf
 import cv2
 import time
 import argparse
-
+import matplotlib.pyplot as plt
 import posenet
 ###################################### keypoint co-ords line 52 ##############################
 parser = argparse.ArgumentParser()
@@ -55,11 +55,12 @@ def main():
                 displacement_fwd_result.squeeze(axis=0),
                 displacement_bwd_result.squeeze(axis=0),
                 output_stride=output_stride,
-                max_pose_detections=10,
+                max_pose_detections=1,
                 min_pose_score=0.15)
 
             keypoint_coords *= output_scale
-            print(keypoint_coords)
+            kpc=keypoint_coords.squeeze()
+            # print(kpc.shape)
 #################### Get keypoint Co-ordinates #######################################################
             # TODO this isn't particularly fast, use GL for drawing and display someday...
             overlay_image = posenet.draw_skel_and_kp(
@@ -70,7 +71,7 @@ def main():
             frame_count += 1
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
-
+        # plt.show()    
         print('Average FPS: ', frame_count / (time.time() - start))
 
 
