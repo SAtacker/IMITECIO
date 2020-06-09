@@ -1,8 +1,10 @@
 import cv2
 import numpy as np
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
 import posenet.constants
-
 
 def valid_resolution(width, height, output_stride=16):
     target_width = (int(width) // output_stride) * output_stride + 1
@@ -75,16 +77,21 @@ def draw_skeleton(
     return out_img
 
 
+
+
+
 def draw_skel_and_kp(
-        img, instance_scores, keypoint_scores, keypoint_coords,
+        img,fig, instance_scores, keypoint_scores, keypoint_coords,
         min_pose_score=0.5, min_part_score=0.5):
+    plt.cla()
+    ax = fig.add_subplot(111,projection='3d')
     out_img = img
     adjacent_keypoints = []
     cv_keypoints = []
     for ii, score in enumerate(instance_scores):
         if score < min_pose_score:
             continue
-
+        
         new_keypoints = get_adjacent_keypoints(
             keypoint_scores[ii, :], keypoint_coords[ii, :, :], min_part_score)
         adjacent_keypoints.extend(new_keypoints)
@@ -93,9 +100,41 @@ def draw_skel_and_kp(
             if ks < min_part_score:
                 continue
             cv_keypoints.append(cv2.KeyPoint(kc[1], kc[0], 10. * ks))
+    ################## MATPLOTLIB PLOT #######################
+    print("adjacent_keypoints: ",adjacent_keypoints)
+    print("cv_keypoints: ",cv_keypoints)
 
+    temp = np.array([[589.3667059623796,0.0,320.0],[0.0,589.3667059623796,240.0],[0.0,0.0,1.0]]) 
+    temp2= np.linalg.inv(temp)
+
+    for i in adjacent_keypoints:
+        xline=[]
+        yline=[]
+        zline=[]
+        for j in i:
+            xline.append(j[0])
+            yline.append(j[1])
+            zline.append(0)
+        print("x:",xline)
+        print("y:",yline) 
+        print("z:",zline)
+        ax.plot3D(xline, yline,zline)
+        ax.scatter(xline,yline, zline)
+    plt.draw()
+    plt.pause(1e-100)
+
+
+
+
+
+
+
+
+
+
+    #############################################################
     out_img = cv2.drawKeypoints(
-        out_img, cv_keypoints, outImage=np.array([]), color=(255, 255, 0),
+        out_img, cv_keypoints, outImage=np.array([]), color=(0, 255,255),
         flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-    out_img = cv2.polylines(out_img, adjacent_keypoints, isClosed=False, color=(255, 255, 0))
-    return out_img
+    out_img = cv2.polylines(out_img, adjacent_keypoints, isClosed=False, color=(0, 0, 255))
+    return out_img,fig

@@ -15,6 +15,7 @@ import time
 import argparse
 import matplotlib.pyplot as plt
 import posenet
+from mpl_toolkits.mplot3d import Axes3D
 ###################################### keypoint co-ords line 52 ##############################
 parser = argparse.ArgumentParser()
 parser.add_argument('--model', type=int, default=101)
@@ -37,7 +38,7 @@ def main():
             cap = cv2.VideoCapture(args.cam_id)
         cap.set(3, args.cam_width)
         cap.set(4, args.cam_height)
-
+        fig = plt.figure() ############# matplotlib fig  #####################
         start = time.time()
         frame_count = 0
         while True:
@@ -60,11 +61,11 @@ def main():
 
             keypoint_coords *= output_scale
             kpc=keypoint_coords.squeeze()
-            # print(kpc.shape)
+            print(kpc.shape)
 #################### Get keypoint Co-ordinates #######################################################
             # TODO this isn't particularly fast, use GL for drawing and display someday...
-            overlay_image = posenet.draw_skel_and_kp(
-                display_image, pose_scores, keypoint_scores, keypoint_coords,
+            overlay_image,fig = posenet.draw_skel_and_kp(
+                display_image,fig, pose_scores, keypoint_scores, keypoint_coords,
                 min_pose_score=0.15, min_part_score=0.1)
 
             cv2.imshow('posenet', overlay_image)
