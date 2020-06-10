@@ -15,6 +15,7 @@ import time
 import argparse
 import numpy as np
 import posenet
+import socket #for client-server communication
 ###################################### keypoint co-ords line 52 ##############################
 parser = argparse.ArgumentParser()
 parser.add_argument('--model', type=int, default=101)
@@ -48,6 +49,40 @@ def grid(center,overlay_image):
     cv2.putText(overlay_image, row, (50,430), cv2.FONT_HERSHEY_SIMPLEX,3, (0,255,255), 5, cv2.LINE_AA) 
     cv2.putText(overlay_image, column, (50,490), cv2.FONT_HERSHEY_SIMPLEX,3, (0,255,255), 5, cv2.LINE_AA)
     return None
+
+################# SERVER CLIENT ###################
+
+
+#I was thinking of using one function that simply connects to the server, 
+#and a different function that uses client_sockets to interact with the server.
+#But for now, I've made only one function that sends and receives messages until 
+#client hits Ctrl+C. The client can run client.py to connect back.
+
+def interact_with_server(): #add a parameter here and call this function from somewhere in the code.
+    host = "localhost"
+    port = 8052
+    client_socks = socket.socket(socket.AF_INET, socks.SOCK_STREAM) #create client socket
+    client_socks.connect((host, port)) #connect to host on port
+
+    message = input(">>> ") #sendWhatEverYouWant
+
+    while True:
+        try:
+            client_socks.send(message.encode()) # 'message' is what you send
+            server_response = client_socks.recv(1024).decode() #convert received bytes to string
+            print("Server: " + server_response) #print server response to terminal
+            message = input(">>> ") #send again whatever you want
+            continue
+
+        except KeyboardInterrupt:
+            client_socks.close() #disconnect from server
+            print("Disconnected from " + host) 
+            exit(0)
+
+# -- change made by wh1t3-h4t
+
+###################################################
+
 
 def main():
     with tf.Session() as sess:
