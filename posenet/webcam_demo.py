@@ -13,9 +13,8 @@ import tensorflow as tf
 import cv2
 import time
 import argparse
-import matplotlib.pyplot as plt
+import numpy as np
 import posenet
-from mpl_toolkits.mplot3d import Axes3D
 ###################################### keypoint co-ords line 52 ##############################
 parser = argparse.ArgumentParser()
 parser.add_argument('--model', type=int, default=101)
@@ -26,6 +25,29 @@ parser.add_argument('--scale_factor', type=float, default=0.7125)
 parser.add_argument('--file', type=str, default=None, help="Optionally use a video file instead of a live camera")
 args = parser.parse_args()
 
+################################### Difining grid pattern and location of center of left and right shoulder 33333333333333333333333
+gidd = np.array((args.cam_width//3,args.cam_width//1.5,args.cam_height//3,args.cam_height//1.5))
+def grid(center,overlay_image):
+    # print(gidd)
+    row='center'
+    column='center'
+    if(center[0]>gidd[0] and center[0]<gidd[1]):
+        row='center'
+    elif(center[0]<gidd[0]):
+        row='right'
+    elif(center[0]>gidd[1]):
+        row='left'
+    if(center[1]>gidd[2] and center[1]<gidd[3]):
+        column='center'
+    elif(center[1]<gidd[2]):
+        column='up'
+    elif(center[1]>gidd[3]):
+        column='bottom'
+    # print("row:",row)
+    # print("column:",column)
+    cv2.putText(overlay_image, row, (50,430), cv2.FONT_HERSHEY_SIMPLEX,3, (0,255,255), 5, cv2.LINE_AA) 
+    cv2.putText(overlay_image, column, (50,490), cv2.FONT_HERSHEY_SIMPLEX,3, (0,255,255), 5, cv2.LINE_AA)
+    return None
 
 def main():
     with tf.Session() as sess:
@@ -38,7 +60,7 @@ def main():
             cap = cv2.VideoCapture(args.cam_id)
         cap.set(3, args.cam_width)
         cap.set(4, args.cam_height)
-        fig = plt.figure() ############# matplotlib fig  #####################
+
         start = time.time()
         frame_count = 0
         while True:
@@ -60,21 +82,31 @@ def main():
                 min_pose_score=0.15)
 
             keypoint_coords *= output_scale
-            kpc=keypoint_coords.squeeze()
-            print(kpc.shape)
+            # print(keypoint_coords)
 #################### Get keypoint Co-ordinates #######################################################
             # TODO this isn't particularly fast, use GL for drawing and display someday...
-            overlay_image,fig = posenet.draw_skel_and_kp(
-                display_image,fig, pose_scores, keypoint_scores, keypoint_coords,
+            overlay_image = posenet.draw_skel_and_kp(
+                display_image, pose_scores, keypoint_scores, keypoint_coords,
                 min_pose_score=0.15, min_part_score=0.1)
-
+################## Pose Classificaton ##################################################################
+            keypoint_coords =  keypoint_coords.squeeze()
+            # keypoint_coords = np.array(keypoint_coords,dtype=np.int64)
+            left_shoulder_y = keypoint_coords[5,0]
+            left_shoulder_x = keypoint_coords[5,1]
+            right_shoulder_y = keypoint_coords[6,0]
+            right_shoulder_x = keypoint_coords[6,1]
+            centre_x = int(right_shoulder_x+left_shoulder_x)//2
+            centre_y = int(right_shoulder_y+left_shoulder_y)//2
+            centre = (centre_x,centre_y)
+            cv2.circle(overlay_image,centre,10,(255,255,255),-1)
+            grid(centre,overlay_image)
             cv2.imshow('posenet', overlay_image)
             frame_count += 1
             if cv2.waitKey(1) & 0xFF == ord('q'):
+                cap.release()
+                cv2.destroyAllWindows()
                 break
-        # plt.show()    
-        print('Average FPS: ', frame_count / (time.time() - start))
-
+            print(f"Average FPS: {frame_count / (time.time() - start) } ",end="\r",flush=True)
 
 if __name__ == "__main__":
     main()
