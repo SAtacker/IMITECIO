@@ -19,7 +19,7 @@ import posenet
 parser = argparse.ArgumentParser()
 parser.add_argument('--model', type=int, default=101)
 parser.add_argument('--cam_id', type=int, default=0)
-parser.add_argument('--cam_width', type=int, default=1280)
+parser.add_argument('--cam_width', type=int, default=1290)
 parser.add_argument('--cam_height', type=int, default=720)
 parser.add_argument('--scale_factor', type=float, default=0.7125)
 parser.add_argument('--file', type=str, default=None, help="Optionally use a video file instead of a live camera")
@@ -34,9 +34,9 @@ def grid(center,overlay_image):
     if(center[0]>gidd[0] and center[0]<gidd[1]):
         row='center'
     elif(center[0]<gidd[0]):
-        row='right'
-    elif(center[0]>gidd[1]):
         row='left'
+    elif(center[0]>gidd[1]):
+        row='right'
     if(center[1]>gidd[2] and center[1]<gidd[3]):
         column='center'
     elif(center[1]<gidd[2]):
@@ -60,12 +60,15 @@ def main():
             cap = cv2.VideoCapture(args.cam_id)
         cap.set(3, args.cam_width)
         cap.set(4, args.cam_height)
+        
 
         start = time.time()
         frame_count = 0
         while True:
             input_image, display_image, output_scale = posenet.read_cap(
                 cap, scale_factor=args.scale_factor, output_stride=output_stride)
+            
+            
 
             heatmaps_result, offsets_result, displacement_fwd_result, displacement_bwd_result = sess.run(
                 model_outputs,
@@ -100,7 +103,8 @@ def main():
             centre = (centre_x,centre_y)
             cv2.circle(overlay_image,centre,10,(255,255,255),-1)
             grid(centre,overlay_image)
-            cv2.imshow('posenet', overlay_image)
+            
+            overlay_image=cv2.imshow('posenet', overlay_image)
             frame_count += 1
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 cap.release()
