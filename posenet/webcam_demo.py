@@ -146,7 +146,7 @@ def main():
                 display_image, pose_scores, keypoint_scores, keypoint_coords,
                 min_pose_score=0.15, min_part_score=0.1)
 ################## Pose Classificaton ##################################################################
-            if(keypoint_scores[0][5]>0.1 and keypoint_scores[0][6]>0.1 and pose_scores[0]>0.15):
+            if(keypoint_scores[0][5]>0.1 and keypoint_scores[0][6]>0.1):
                 keypoint_coords =  keypoint_coords.squeeze()
                 # keypoint_coords = np.array(keypoint_coords,dtype=np.int64)
                 left_shoulder_y = keypoint_coords[5,0]
