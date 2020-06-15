@@ -15,7 +15,13 @@ import time
 import argparse
 import numpy as np
 import posenet
-import socket #for client-server communication
+import win32api, win32con
+import keyboard
+from pynput.mouse import Button,Controller
+# import socket #for client-server communication
+
+# import keyboard
+
 ###################################### keypoint co-ords line 52 ##############################
 parser = argparse.ArgumentParser()
 parser.add_argument('--model', type=int, default=101)
@@ -28,27 +34,86 @@ args = parser.parse_args()
 
 ################################### Difining grid pattern and location of center of left and right shoulder 33333333333333333333333
 gidd = np.array((args.cam_width//3,args.cam_width//1.5,args.cam_height//3,args.cam_height//1.5))
-def grid(center,overlay_image):
+horrizontal = args.cam_height//2
+def grid(center,display_image,row,column,str_no_str,right_hand,left_hand):
+    right_hand =np.array(right_hand,dtype=np.int)
+    left_hand = np.array(left_hand,dtype=np.int)
     # print(gidd)
-    row='center'
-    column='center'
+    row_copy=row
+    column_copy=column
+    str_no_str_copy=str_no_str
     if(center[0]>gidd[0] and center[0]<gidd[1]):
-        row='center'
-    elif(center[0]<gidd[0]):
-        row='left'
-    elif(center[0]>gidd[1]):
-        row='right'
-    if(center[1]>gidd[2] and center[1]<gidd[3]):
         column='center'
+    elif(center[0]<gidd[0]):
+        column='left'
+    elif(center[0]>gidd[1]):
+        column='right'
+    if(center[1]>gidd[2] and center[1]<gidd[3]):
+        row='center'
     elif(center[1]<gidd[2]):
-        column='up'
+        row='up'
     elif(center[1]>gidd[3]):
-        column='bottom'
+        row='bottom'
+    
+    if left_hand[0]<=horrizontal :
+        fwd_bwd = "Backward"
+    else : 
+        fwd_bwd = "Forward"
+    if right_hand[0]<=horrizontal:
+        str_no_str = "Strike"
+    else : 
+        str_no_str = "Non-Strike"
     # print("row:",row)
     # print("column:",column)
-    cv2.putText(overlay_image, row, (50,430), cv2.FONT_HERSHEY_SIMPLEX,3, (0,255,255), 5, cv2.LINE_AA) 
-    cv2.putText(overlay_image, column, (50,490), cv2.FONT_HERSHEY_SIMPLEX,3, (0,255,255), 5, cv2.LINE_AA)
-    return None
+    cv2.circle(display_image,(right_hand[1],right_hand[0]),10,(255,255,0),-1)
+    cv2.circle(display_image,(left_hand[1],left_hand[0]),10,(255,255,0),-1)
+    cv2.circle(display_image,(args.cam_width//2,horrizontal),10,(255,255,255),-1)
+    cv2.putText(display_image, fwd_bwd, (600,400), cv2.FONT_HERSHEY_SIMPLEX,3, (0,255,255), 5, cv2.LINE_AA)
+    cv2.putText(display_image, str_no_str, (600,490), cv2.FONT_HERSHEY_SIMPLEX,3, (0,255,255), 5, cv2.LINE_AA)
+    cv2.putText(display_image, row, (50,430), cv2.FONT_HERSHEY_SIMPLEX,3, (0,255,255), 5, cv2.LINE_AA) 
+    cv2.putText(display_image, column, (50,490), cv2.FONT_HERSHEY_SIMPLEX,3, (0,255,255), 5, cv2.LINE_AA)
+    if(row_copy!=row):
+        if(row_copy=='center' and row=='up'):
+            keyboard.press_and_release('space')
+
+    if(column_copy!=column):
+        print('column change')
+        if(column_copy=='right'):
+            if(column=='center'):
+                keyboard.press_and_release('a')
+                print(column)
+            if(column=='left'):
+                keyboard.press_and_release('a')
+                keyboard.press_and_release('a')
+                print(column)
+        if(column_copy=='center'):
+            if(column=='left'):
+                keyboard.press_and_release('a')
+                print(column)
+            elif(column=='right'):
+                keyboard.press_and_release('d')
+                print(column)
+        elif(column_copy=='left'):
+            if(column=='center'):
+                keyboard.press_and_release('d')
+                print(column)
+            elif(column=='right'):
+                keyboard.press_and_release('d')
+                keyboard.press_and_release('d')
+                print(column)
+    mouse=Controller()
+    if(fwd_bwd=='Backward'):
+        keyboard.press('s')
+    elif(fwd_bwd=='Forward'):
+        keyboard.press('w')
+    if(str_no_str_copy!=str_no_str and str_no_str=='Strike'):
+        mouse.click(Button.left,1)
+    
+
+    
+    return row,column,str_no_str
+
+
 
 ################# SERVER CLIENT ###################
 
@@ -58,33 +123,40 @@ def grid(center,overlay_image):
 #But for now, I've made only one function that sends and receives messages until 
 #client hits Ctrl+C. The client can run client.py to connect back.
 
-def interact_with_server(): #add a parameter here and call this function from somewhere in the code.
-    host = "localhost"
-    port = 8052
-    client_socks = socket.socket(socket.AF_INET, socks.SOCK_STREAM) #create client socket
-    client_socks.connect((host, port)) #connect to host on port
+# def interact_with_server(): #add a parameter here and call this function from somewhere in the code.
+#     host = "localhost"
+#     port = 8052
+#     client_socks = socket.socket(socket.AF_INET, socks.SOCK_STREAM) #create client socket
+#     client_socks.connect((host, port)) #connect to host on port
 
-    message = input(">>> ") #sendWhatEverYouWant
+#     message = input(">>> ") #sendWhatEverYouWant
 
-    while True:
-        try:
-            client_socks.send(message.encode()) # 'message' is what you send
-            server_response = client_socks.recv(1024).decode() #convert received bytes to string
-            print("Server: " + server_response) #print server response to terminal
-            message = input(">>> ") #send again whatever you want
-            continue
+#     while True:
+#         try:
+#             client_socks.send(message.encode()) # 'message' is what you send
+#             server_response = client_socks.recv(1024).decode() #convert received bytes to string
+#             print("Server: " + server_response) #print server response to terminal
+#             message = input(">>> ") #send again whatever you want
+#             continue
 
-        except KeyboardInterrupt:
-            client_socks.close() #disconnect from server
-            print("Disconnected from " + host) 
-            exit(0)
+#         except KeyboardInterrupt:
+#             client_socks.close() #disconnect from server
+#             print("Disconnected from " + host) 
+#             exit(0)
 
-# -- change made by wh1t3-h4t
+# # -- change made by wh1t3-h4t
 
-###################################################
+# ###################################################
 
+
+row='center'
+column='center'
+strike='Non-Strike'
 
 def main():
+    global row
+    global column
+    global strike
     with tf.Session() as sess:
         model_cfg, model_outputs = posenet.load_model(args.model, sess)
         output_stride = model_cfg['output_stride']
@@ -120,13 +192,14 @@ def main():
                 min_pose_score=0.15)
 
             keypoint_coords *= output_scale
-            # print(keypoint_coords)
+            # print(keypoint_scores)
 #################### Get keypoint Co-ordinates #######################################################
             # TODO this isn't particularly fast, use GL for drawing and display someday...
-            overlay_image = posenet.draw_skel_and_kp(
-                display_image, pose_scores, keypoint_scores, keypoint_coords,
-                min_pose_score=0.15, min_part_score=0.1)
+            # display_image = posenet.draw_skel_and_kp(
+            #     display_image, pose_scores, keypoint_scores, keypoint_coords,
+            #     min_pose_score=0.15, min_part_score=0.1)
 ################## Pose Classificaton ##################################################################
+            # if(keypoint_scores[0][5]>0.1 and keypoint_scores[0][6]>0.1):
             keypoint_coords =  keypoint_coords.squeeze()
             # keypoint_coords = np.array(keypoint_coords,dtype=np.int64)
             left_shoulder_y = keypoint_coords[5,0]
@@ -136,10 +209,16 @@ def main():
             centre_x = int(right_shoulder_x+left_shoulder_x)//2
             centre_y = int(right_shoulder_y+left_shoulder_y)//2
             centre = (centre_x,centre_y)
-            cv2.circle(overlay_image,centre,10,(255,255,255),-1)
-            grid(centre,overlay_image)
+            cv2.circle(display_image,centre,10,(255,255,255),-1)
+            # row,column=grid(centre,display_image,row,column)
+            row,column,strike=grid(centre,display_image,row,column,strike,right_hand= keypoint_coords[9],left_hand= keypoint_coords[10])
             
-            overlay_image=cv2.imshow('posenet', overlay_image)
+            cv2.line(display_image,(430,0),(430,720),(255,255,255),5)
+            cv2.line(display_image,(860,0),(860,720),(255,255,255),5)
+            cv2.line(display_image,(0,240),(1290,240),(255,255,255),5)
+            cv2.line(display_image,(0,480),(1290,480),(255,255,255),5)
+            
+            display_image=cv2.imshow('posenet', display_image)
             frame_count += 1
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 cap.release()
