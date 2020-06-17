@@ -210,7 +210,7 @@ def main():
             centre_y = int(right_shoulder_y+left_shoulder_y)//2
             centre = (centre_x,centre_y)
             cv2.circle(display_image,centre,10,(255,255,255),-1)
-            # row,column=grid(centre,display_image,row,column)
+            # grid(centre,display_image,row,column,right_hand= keypoint_coords[9],left_hand= keypoint_coords[10])
             row,column,strike=grid(centre,display_image,row,column,strike,right_hand= keypoint_coords[9],left_hand= keypoint_coords[10])
             
             cv2.line(display_image,(430,0),(430,720),(255,255,255),5)
