@@ -17,7 +17,9 @@ import numpy as np
 import posenet
 import win32api, win32con
 import keyboard
-from pynput.mouse import Button,Controller
+import subprocess
+import threading
+# from pynput.mouse import Button,Controller
 # import socket #for client-server communication
 
 # import keyboard
@@ -35,13 +37,13 @@ args = parser.parse_args()
 ################################### Difining grid pattern and location of center of left and right shoulder 33333333333333333333333
 gidd = np.array((args.cam_width//3,args.cam_width//1.5,args.cam_height//3,args.cam_height//1.5))
 horrizontal = args.cam_height//2
-def grid(center,display_image,row,column,str_no_str,right_hand,left_hand):
+def grid(center,display_image,row,column,fwd_bwd,right_hand,left_hand):
     right_hand =np.array(right_hand,dtype=np.int)
     left_hand = np.array(left_hand,dtype=np.int)
     # print(gidd)
     row_copy=row
     column_copy=column
-    str_no_str_copy=str_no_str
+    fwd_bwd_copy=fwd_bwd
     if(center[0]>gidd[0] and center[0]<gidd[1]):
         column='center'
     elif(center[0]<gidd[0]):
@@ -72,46 +74,42 @@ def grid(center,display_image,row,column,str_no_str,right_hand,left_hand):
     cv2.putText(display_image, str_no_str, (600,490), cv2.FONT_HERSHEY_SIMPLEX,3, (0,255,255), 5, cv2.LINE_AA)
     cv2.putText(display_image, row, (50,430), cv2.FONT_HERSHEY_SIMPLEX,3, (0,255,255), 5, cv2.LINE_AA) 
     cv2.putText(display_image, column, (50,490), cv2.FONT_HERSHEY_SIMPLEX,3, (0,255,255), 5, cv2.LINE_AA)
-    if(row_copy!=row):
-        if(row_copy=='center' and row=='up'):
-            keyboard.press_and_release('space')
+    
 
     if(column_copy!=column):
         print('column change')
         if(column_copy=='right'):
             if(column=='center'):
-                keyboard.press_and_release('a')
+                keyboard.press_and_release('left')
                 print(column)
             if(column=='left'):
-                keyboard.press_and_release('a')
-                keyboard.press_and_release('a')
+                keyboard.press_and_release('left')
+                keyboard.press_and_release('left')
                 print(column)
         if(column_copy=='center'):
             if(column=='left'):
-                keyboard.press_and_release('a')
+                keyboard.press_and_release('left')
                 print(column)
             elif(column=='right'):
-                keyboard.press_and_release('d')
+                keyboard.press_and_release('right')
                 print(column)
         elif(column_copy=='left'):
             if(column=='center'):
-                keyboard.press_and_release('d')
+                keyboard.press_and_release('right')
                 print(column)
             elif(column=='right'):
-                keyboard.press_and_release('d')
-                keyboard.press_and_release('d')
+                keyboard.press_and_release('right')
+                keyboard.press_and_release('right')
                 print(column)
-    mouse=Controller()
-    if(fwd_bwd=='Backward'):
-        keyboard.press('s')
-    elif(fwd_bwd=='Forward'):
-        keyboard.press('w')
-    if(str_no_str_copy!=str_no_str and str_no_str=='Strike'):
-        mouse.click(Button.left,1)
+    if(fwd_bwd_copy!=fwd_bwd and fwd_bwd=='Backward'):
+        print('jump')
+        keyboard.press('space')
+    
+    
     
 
     
-    return row,column,str_no_str
+    return row,column,fwd_bwd
 
 
 
@@ -149,14 +147,23 @@ def grid(center,display_image,row,column,str_no_str,right_hand,left_hand):
 # ###################################################
 
 
+
+############opening the game###############
+def opengame():
+    cmd = "NotEndlessRunner.exe"
+    subprocess.call(cmd, shell=True) 
+    return None 
+
+
 row='center'
 column='center'
-strike='Non-Strike'
+jump='forward'
 
 def main():
     global row
     global column
-    global strike
+    global jump
+    t1=threading.Thread(target=opengame)
     with tf.Session() as sess:
         model_cfg, model_outputs = posenet.load_model(args.model, sess)
         output_stride = model_cfg['output_stride']
@@ -167,10 +174,12 @@ def main():
             cap = cv2.VideoCapture(args.cam_id)
         cap.set(3, args.cam_width)
         cap.set(4, args.cam_height)
+        start = time.time()
+        
         
 
-        start = time.time()
         frame_count = 0
+        t1.start()
         while True:
             input_image, display_image, output_scale = posenet.read_cap(
                 cap, scale_factor=args.scale_factor, output_stride=output_stride)
@@ -211,7 +220,7 @@ def main():
             centre = (centre_x,centre_y)
             cv2.circle(display_image,centre,10,(255,255,255),-1)
             # grid(centre,display_image,row,column,right_hand= keypoint_coords[9],left_hand= keypoint_coords[10])
-            row,column,strike=grid(centre,display_image,row,column,strike,right_hand= keypoint_coords[9],left_hand= keypoint_coords[10])
+            row,column,jump=grid(centre,display_image,row,column,jump,right_hand= keypoint_coords[9],left_hand= keypoint_coords[10])
             
             cv2.line(display_image,(430,0),(430,720),(255,255,255),5)
             cv2.line(display_image,(860,0),(860,720),(255,255,255),5)
@@ -221,6 +230,7 @@ def main():
             display_image=cv2.imshow('posenet', display_image)
             frame_count += 1
             if cv2.waitKey(1) & 0xFF == ord('q'):
+                t1.join()
                 cap.release()
                 cv2.destroyAllWindows()
                 break
