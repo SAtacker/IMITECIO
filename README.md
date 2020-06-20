@@ -12,10 +12,12 @@ cd IMITECIO
 ```
 In Your Virtual Env
 ```
-pip install -r "posenet\requirements.txt" 
+pip install -r "requirements.txt" 
 python posenet\webcam_demo.py
 
 ```
+Or
+`test_game.sh`
 
 #### Game Controls: Left arrow key and Right arrow key for left and right, space to jump.
 [![Watch the video](https://img.youtube.com/vi/gNKyBx6aLjc/hqdefault.jpg)](https://youtu.be/gNKyBx6aLjc)
