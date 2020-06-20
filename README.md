@@ -17,5 +17,5 @@ python posenet\webcam_demo.py
 
 ```
 
-#### Game Coming Very Soon
+#### Game Controls: Left arrow key and Right arrow key for left and right, space to jump.
 [![Watch the video](https://img.youtube.com/vi/gNKyBx6aLjc/hqdefault.jpg)](https://youtu.be/gNKyBx6aLjc)
