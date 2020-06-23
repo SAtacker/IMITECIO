@@ -77,32 +77,32 @@ def grid(center,display_image,row,column,fwd_bwd,right_hand,left_hand):
     
 
     if(column_copy!=column):
-        print('column change')
+        # print('column change')
         if(column_copy=='right'):
             if(column=='center'):
                 keyboard.press_and_release('left')
-                print(column)
+                # print(column)
             if(column=='left'):
                 keyboard.press_and_release('left')
                 keyboard.press_and_release('left')
-                print(column)
+                # print(column)
         if(column_copy=='center'):
             if(column=='left'):
                 keyboard.press_and_release('left')
-                print(column)
+                # print(column)
             elif(column=='right'):
                 keyboard.press_and_release('right')
-                print(column)
+                # print(column)
         elif(column_copy=='left'):
             if(column=='center'):
                 keyboard.press_and_release('right')
-                print(column)
+                # print(column)
             elif(column=='right'):
                 keyboard.press_and_release('right')
                 keyboard.press_and_release('right')
-                print(column)
+                # print(column)
     if(fwd_bwd_copy!=fwd_bwd and fwd_bwd=='Backward'):
-        print('jump')
+        # print('jump')
         keyboard.press('space')
     
     
