@@ -26,9 +26,7 @@ Pose Estimation (& Replication) Based Game
 
 ## About The Project
 
-[![Imitecio][Logo]](https://github.com/SAtacker/IMITECIO/blob/master/docs/images/ImitecioLogoFree.png)  
-
-Human Pose Estimation has been for a while in the deep learning industry. Considering the various applications of it, we aimed at creating a simple game at first. Some few things we intend to do further are mentioned at the end. 
+*  Pose Estimation has been for a while in the deep learning industry. Considering the various applications of it, we aimed at creating a simple game at first. Some few things we intend to do further are mentioned at the end. 
 Refer this [documentation](https://link/to/report/)
 
 ### Tech Stack
@@ -177,7 +175,7 @@ python posenet\webcam_demo.py
 <!-- RESULTS AND DEMO -->
 ## Results and Demo
 
-[**NotEndlessRunner**](https://github.com/SAtacker/IMITECIO/blob/master/docs/images/GameScreenshot.png)
+![**NotEndlessRunner**](https://github.com/SAtacker/IMITECIO/blob/master/docs/images/GameScreenshot.png)
 
 * On Manipulating the code according to your requirements, you could use it to control most of the games.
 
