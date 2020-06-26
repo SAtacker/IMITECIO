@@ -35,7 +35,7 @@ Refer this [documentation](https://link/to/report/)
 * For the Posenet Js to Python port [this](https://github.com/rwightman/posenet-python)  repo is used.
 <!-- This section should list the technologies you used for this project. Leave any add-ons/plugins for the prerequisite section. Here are a few examples. -->
 
-The rest is openCV for webcam input, Unity for NotEndlessRunner game and pywin32 for keypresses. Although pynput is used , we prefer pywin32 for windows.
+The rest is openCV for webcam input, Unity for NotEndlessRunner game and keyboard for keypresses. Although pynput is used , we prefer pywin32 for windows.
 
 * [OpenCV](https://opencv.org/)
 * [Unity](https://unity.com/)  
