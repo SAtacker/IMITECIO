@@ -1,6 +1,6 @@
 # IMITECIO
 
-[![Imitecio][Logo]](https://github.com/SAtacker/IMITECIO/blob/master/docs/images/ImitecioLogoFree.png)  
+![Imitecio](https://github.com/SAtacker/IMITECIO/blob/master/docs/images/ImitecioLogoFree.png)  
 
 Pose Estimation (& Replication) Based Game  
 
@@ -44,31 +44,8 @@ The rest is openCV for webcam input, Unity for NotEndlessRunner game and pywin32
 
 ### File Structure
 
-  IMITECIO
-    .
-    ├── NotEndlessRunner        # Unity Project-File of the Game
-    ├── docs                    # Documentation files (alternatively `doc`)
-    │   ├── report.pdf          # Project report
-    │   └── images              # Folder containing screenshots, gifs, videos of results
-    ├── posenet                 # Source files (alternatively `lib` or `app`)
-    │   ├── posenet             # Files for pose tracking          
-    │   └── NotEndlessRunner_Data
-    │   └── MonoBleedingEdge
-    │   └── License.txt         # Posenet License by the porter
-    │   └── NotEndlessRunner.exe
-    │   └── UnityCrashHandler64.exe
-    │   └── UnityPlayer.dll
-    │   └── webcam_demo.py      # The main file to run both the game and controls at once
-    │   └── NOTICE.txt          # Notice by the porter
-    |
-    ├── game_withoutReq.sh      # To run the game without installing requirements
-    |
-    ├── requirements.txt        # Requirements File
-    ├── test_game.sh            # Run the game installing all the requirements
-    ├── LICENSE
-    └── README.md
-
-C:.
+```
+IMITECIO
 ├───docs
 │   └───images
 ├───NotEndlessRunner
@@ -176,6 +153,7 @@ C:.
     │   └───converter
     └───_models                                         ### You may need to download the models initially.
         └───checkpoints
+```
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -201,12 +179,13 @@ python posenet\webcam_demo.py
 
 [**NotEndlessRunner**](https://github.com/SAtacker/IMITECIO/blob/master/docs/images/GameScreenshot.png)
 
-On Manipulating the code according to your requirements, you could use it to control most of the games.
+* On Manipulating the code according to your requirements, you could use it to control most of the games.
 
 ![**Part 1**](https://github.com/SAtacker/IMITECIO/blob/master/docs/images/GameControlsPart1.gif)  
 ![**Part 2**](https://github.com/SAtacker/IMITECIO/blob/master/docs/images/GameControlsPart2.gif)
 
-We have tried playing with [SpaceInvaders](https://github.com/leerob/Space_Invaders)
+* We have tried playing with [SpaceInvaders](https://github.com/leerob/Space_Invaders)
+
 ![**Space Invaders**](https://github.com/SAtacker/IMITECIO/blob/master/docs/images/SpaceInvaders.PNG)  
 
 <!-- FUTURE WORK -->
@@ -243,4 +222,4 @@ We have tried playing with [SpaceInvaders](https://github.com/leerob/Space_Invad
 <!-- LICENSE -->
 ## License
 
-Describe your [License](LICENSE) for your project.
+[License](LICENSE)
