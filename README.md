@@ -207,9 +207,9 @@ python posenet\webcam_demo.py
 ## Contributors
 
 * [Shreyas Atre](https://github.com/SAtacker)
-* [Member Name](https://github.com/id)
-* [Member Name](https://github.com/id)
-* [Member Name](https://github.com/id)
+* [Dhruvi Doshi](https://github.com/dhruvi29)
+* [Sarah Nisar](https://github.com/sarah-nisar)
+* [Arnav](https://github.com/wh1t3-h4t)
 
 <!-- ACKNOWLEDGEMENTS AND REFERENCES -->
 ## Acknowledgements and Resources
