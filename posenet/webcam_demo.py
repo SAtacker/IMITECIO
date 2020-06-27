@@ -59,7 +59,6 @@ def angle2(a,b,c):
     cosine_angle = np.dot(ba, bc) / (np.linalg.norm(ba) * np.linalg.norm(bc))
     angle = np.arccos(cosine_angle)
     angle=np.degrees(angle)
-    print(angle)
     return angle
         
 
@@ -113,6 +112,7 @@ def main():
             # if(keypoint_scores[0][5]>0.1 and keypoint_scores[0][6]>0.1):
             keypoint_coords =  keypoint_coords.squeeze()
             angle(keypoint_coords)
+            centre=(int(keypoint_coords[5,1]),int(keypoint_coords[5,0]))
             
 
 
