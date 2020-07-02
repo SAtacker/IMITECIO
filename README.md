@@ -53,64 +53,18 @@ IMITECIO
 │   │   ├───Materials
 │   │   ├───Prefab
 │   │   ├───Raw Mocap Data
-│   │   │   ├───Animations
-│   │   │   │   ├───Idle
-│   │   │   │   ├───Interacting
-│   │   │   │   ├───Running
-│   │   │   │   │   ├───Avoiding
-│   │   │   │   │   ├───Jumping
-│   │   │   │   │   └───Turning
-│   │   │   │   ├───Sprinting
-│   │   │   │   │   └───Turning
-│   │   │   │   ├───Strafing
-│   │   │   │   └───Walking
-│   │   │   │       └───Turning
-│   │   │   ├───DefaultAvatar.fbm
-│   │   │   └───Materials
 │   │   ├───Scenes
 │   │   ├───Scripts
 │   │   ├───Sprites
-│   │   │   └───Robot Kyle
-│   │   │       ├───Materials
-│   │   │       ├───Model
-│   │   │       └───Textures
 │   │   └───TextMesh Pro
 │   │       ├───Documentation
 │   │       ├───Fonts
 │   │       ├───Resources
-│   │       │   ├───Fonts & Materials
-│   │       │   ├───Shaders
-│   │       │   ├───Sprite Assets
-│   │       │   └───Style Sheets
 │   │       └───Sprites
 │   ├───Library
-│   │   ├───APIUpdater
-│   │   ├───Artifacts
-│   │   │   ├───00
-│   │   │   ├───01
-│   │   │   ├───02
-│   │   │   ...
-│   │   │   └───ff
-│   │   ├───metadata
-│   │   │   ├───00
-│   │   │   ├───01
-|   |   |   ...
-│   │   │   └───fe
-|   |   |                                                 ### Some Unity Files, Cache have been ommited to keep the tree short.
-│   │   ├───PlayerDataCache
-│   │   │   ├───OSXUniversal
-│   │   │   │   └───Data
-│   │   │   │       ├───Managed
-│   │   │   │       └───Resources
-│   │   │   └───Win64
-│   │   │       └───Data
-│   │   │           ├───Managed
-│   │   │           └───Resources
-│   │   ├───ScriptAssemblies
 |   |
 │   ├───Logs
 │   ├───obj
-│   │   └───Debug
 │   ├───Packages
 │   └───ProjectSettings
 ├───OsX.app
@@ -118,38 +72,17 @@ IMITECIO
 │       ├───Frameworks
 │       ├───MacOS
 │       ├───MonoBleedingEdge
-│       │   └───etc
-│       │       └───mono
-│       │           ├───2.0
-│       │           │   └───Browsers
-│       │           ├───4.0
-│       │           │   └───Browsers
-│       │           ├───4.5
-│       │           │   └───Browsers
-│       │           ├───mconfig
-│       │           └───registry
 │       └───Resources
-│           └───Data
-│               ├───Managed
-│               └───Resources
 └───posenet
     ├───MonoBleedingEdge
     │   ├───EmbedRuntime
-    │   └───etc
-    │       └───mono
-    │           ├───2.0
-    │           │   └───Browsers
-    │           ├───4.0
-    │           │   └───Browsers
-    │           ├───4.5
-    │           │   └───Browsers
-    │           └───mconfig
+    │  
     ├───NotEndlessRunner_Data
     │   ├───Managed
     │   └───Resources
     ├───posenet
     │   └───converter
-    └───_models                                         ### You may need to download the models initially.
+    └───models                                         ### You may need to download the models initially.
         └───checkpoints
 ```
 
