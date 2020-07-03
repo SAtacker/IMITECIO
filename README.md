@@ -29,6 +29,12 @@ Pose Estimation (& Replication) Based Game
 *  Pose Estimation has been for a while in the deep learning industry. Considering the various applications of it, we aimed at creating a simple game at first. Some few things we intend to do further are mentioned at the end. 
 Refer this [documentation](https://link/to/report/)
 
+<hr>
+
+[![Game Demo](https://img.youtube.com/vi/wcseK9_0QUM/0.jpg)](https://www.youtube.com/watch?v=wcseK9_0QUM)
+
+<hr>
+
 ### Tech Stack
 
 * The [Posenet model](https://github.com/tensorflow/tfjs-models/tree/master/posenet) trained by Google is used.
@@ -44,9 +50,9 @@ The rest is openCV for webcam input, Unity for NotEndlessRunner game and keyboar
 
 ```
 IMITECIO
-├───docs
+├───docs                                                                       ## Documents and Images
 │   └───images
-├───NotEndlessRunner
+├───NotEndlessRunner                                                           ## Game Files
 │   |
 │   ├───Assets
 │   │   ├───Animation
@@ -67,13 +73,13 @@ IMITECIO
 │   ├───obj
 │   ├───Packages
 │   └───ProjectSettings
-├───OsX.app
+├───OsX.app                                          ## Game for MacOs
 │   └───Contents
 │       ├───Frameworks
 │       ├───MacOS
 │       ├───MonoBleedingEdge
 │       └───Resources
-└───posenet
+└───posenet                                          ## Main Python Files
     ├───MonoBleedingEdge
     │   ├───EmbedRuntime
     │  
@@ -82,7 +88,7 @@ IMITECIO
     │   └───Resources
     ├───posenet
     │   └───converter
-    └───models                                         ### You may need to download the models initially.
+    └───models                                       ## You may need to download the models initially.
         └───checkpoints
 ```
 
