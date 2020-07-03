@@ -148,7 +148,16 @@ python posenet\webcam_demo.py
 ## Acknowledgements and Resources
 
 * [SRA VJTI](http://sra.vjti.info/) Eklavya 2020  
-* Refered [this](https://github.com/rwightman/posenet-python for achieving porting
+* Refered [this](https://github.com/rwightman/posenet-python) for PoseNet Python
+Some More
+* [PoseNet](https://github.com/tensorflow/tfjs-models/tree/master/posenet)
+* [OpenPose](https://github.com/CMU-Perceptual-Computing-Lab/openpose)
+* [Pytorch 3D pose](https://github.com/xingyizhou/Pytorch-pose-hg-3d)
+* [Paper](https://arxiv.org/pdf/1312.4659)
+* [Paper](https://arxiv.org/pdf/1603.06937.pdf)
+* [Paper](https://arxiv.org/pdf/1701.01779.pdf)
+* [Paper](https://arxiv.org/pdf/1803.08225.pdf)
+* [Space Invaders](https://github.com/leerob/Space_Invaders)
 
 <!-- LICENSE -->
 ## License
