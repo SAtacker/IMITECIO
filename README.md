@@ -155,7 +155,6 @@ python posenet\webcam_demo.py
 
 * [SRA VJTI](http://sra.vjti.info/) Eklavya 2020  
 * Refered [this](https://github.com/rwightman/posenet-python) for PoseNet Python
-Some More
 * [PoseNet](https://github.com/tensorflow/tfjs-models/tree/master/posenet)
 * [OpenPose](https://github.com/CMU-Perceptual-Computing-Lab/openpose)
 * [Pytorch 3D pose](https://github.com/xingyizhou/Pytorch-pose-hg-3d)
