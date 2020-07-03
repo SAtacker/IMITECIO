@@ -27,7 +27,7 @@ Pose Estimation (& Replication) Based Game
 ## About The Project
 
 *  Pose Estimation has been for a while in the deep learning industry. Considering the various applications of it, we aimed at creating a simple game at first. Some few things we intend to do further are mentioned at the end. 
-Refer this [documentation](https://github.com/SAtacker/IMITECIO/blob/master/docs/EKLAVYA%20REPORT%20(1).pdf)
+Refer this [documentation](https://github.com/SAtacker/IMITECIO/blob/master/docs/EKLAVYA%20REPORT%20(2).pdf)
 
 <hr>
 
