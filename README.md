@@ -1,8 +1,8 @@
 # IMITECIO
 
-![Imitecio](https://github.com/SAtacker/IMITECIO/blob/master/docs/images/ImitecioLogoFree.png)  
-
-Pose Estimation (& Replication) Based Game  
+<p align="center">
+ <img src="docs/images/ImitecioLogoFree.png" alt="logo" width="250" height="250">
+</p>  
 
 <!-- TABLE OF CONTENTS -->
 
@@ -25,7 +25,7 @@ Pose Estimation (& Replication) Based Game
 <!-- ABOUT THE PROJECT -->
 
 ## About The Project
-
+### Pose Estimation (& Replication) Based Game
 *  Pose Estimation has been for a while in the deep learning industry. Considering the various applications of it, we aimed at creating a simple game at first. Some few things we intend to do further are mentioned at the end. 
 Refer this [documentation](https://github.com/SAtacker/IMITECIO/blob/master/docs/EKLAVYA%20REPORT%20(2).pdf)
 
