@@ -41,7 +41,7 @@ multidict==4.7.6
 numpy==1.18.1
 oauthlib==3.1.0
 opencv-contrib-python==4.2.0.34
-opencv-python==3.4.5.20
+opencv-python==3.4.7.28
 opt-einsum==3.1.0
 osnap==0.3.1
 path==14.0.1
