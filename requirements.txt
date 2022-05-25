@@ -52,7 +52,7 @@ pyasn1==0.4.8
 pyasn1-modules==0.2.7
 pycparser==2.20
 pycryptodome==3.8.2
-PyJWT==1.7.1
+PyJWT==2.4.0
 pynput==1.6.8
 pyOpenSSL==19.1.0
 pyparsing==2.4.7
